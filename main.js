@@ -1,8 +1,43 @@
 const mole=document.querySelector('.mole')
 const main_container=document.querySelector('.main-container')
 const scoreBoard=document.querySelector('.score')
+const diffMenu=document.querySelector('.diff')
 // non dom variables
-let score=0
+
+let highestScore=localStorage.getItem('highestScore') || 0
+
+scoreBoard.innerHTML=`<p>Score:0</p><p>Higest Score:${highestScore}`
+
+let pressed=false
+
+document.getElementById('easy').addEventListener('click',()=>{
+
+    mole.style.width=140+'px'
+    mole.style.height=80+'px'
+    pressed=true
+    diffMenu.style.display='none'
+    gameCode()
+
+
+})
+
+document.getElementById('hard').addEventListener('click',()=>{
+
+    mole.style.width=80+'px'
+    mole.style.height=60+'px'
+    pressed=true
+    diffMenu.style.display='none'
+    gameCode()
+
+
+})
+
+
+
+
+
+ function gameCode(){
+    let score=0
 let containerWidth=main_container.offsetWidth;
 let containerHeight=main_container.offsetHeight;
 let moleWidth = mole.offsetWidth;
@@ -10,10 +45,6 @@ let moleHeight = mole.offsetHeight;
 const maxX = containerWidth - moleWidth;
 const maxY = containerHeight - moleHeight;
 let moleVisible=true
-let highestScore=localStorage.getItem('highestScore') || 0
-
-scoreBoard.innerHTML=`<p>Score:0</p><p>Higest Score:${highestScore}`
-
 function moveMole(){
 
     let randomX=Math.random()*maxX
@@ -25,6 +56,7 @@ function moveMole(){
   
 
 }
+
 
 mole.addEventListener('click',()=>{
     if(moleVisible){ score++
@@ -45,10 +77,10 @@ function resetGame() {
     scoreBoard.innerHTML =`<p>Score:0</p><p>Higest Score:${highestScore}`
 }
 
-let gameInterval=setInterval(moveMole,2000)
+let gameInterval=setInterval(moveMole,1000)
 let gameTimeout=setTimeout(()=>{
    restart()
-},15000)
+},30000)
 
 
 function restart(){
@@ -63,3 +95,4 @@ function restart(){
         score=0
         resetGame() 
 }
+ }
